@@ -1,2 +1,1 @@
-# codeforces-difficulty-display
-Codeforces Difficulty Display
+# Codeforces Difficulty Display
