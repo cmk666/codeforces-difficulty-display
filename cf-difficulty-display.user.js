@@ -11,11 +11,6 @@
 // ==/UserScript==
 
 (() => {
-	var insertAfter = (x, y) => {
-		var z = y.parentNode;
-		if ( z.lastChild == y ) z.appendChild(x);
-		else z.insertBefore(x, y.nextSibling);
-	};
 	var url = location.href;
 	var cid = url.substr(9 + url.indexOf('/contest/'));
 	if ( !/[1-9]\d+/.test(cid) ) return;
@@ -29,22 +24,38 @@
 				var pro = data.result.problems;
 				var ori = document.querySelector(
 					'#pageContent > div.datatable > div:nth-child(6) > table > tbody > tr > th.top.right');
+				var txt = document.createElement('img');
+				txt.src = '/images/icons/lightning-16x16.png';
+				txt.title = 'Difficulty';
 				var ele = document.createElement('th');
-				ele.innerText = 'Difficulty';
-				ele.style.width = '5em';
+				ele.appendChild(txt);
+				ele.style.width = '2.5em';
+				ele.style.fontSize = '2rem';
 				ele.classList = ori.classList;
-				ori.classList.remove('right');
-				insertAfter(ele, ori);
+				ele.classList.remove('right');
+				ori.parentNode.insertBefore(ele, ori);
+				txt = document.createElement('img');
+				txt.src = '/images/icons/ok-16x16.png';
+				txt.title = 'Solved';
+				ori.appendChild(txt);
 				ori = document.querySelectorAll(
 					'#pageContent > div.datatable > div:nth-child(6) > table > tbody > tr > td.right');
 				for ( var i = 0 ; i < ori.length ; i++ ) {
 					var dif = pro[i].rating;
 					if ( dif == undefined ) dif = '';
+					txt = document.createElement('span');
+					txt.title = 'Difficulty';
+					txt.style.fontSize = '1.1rem';
+					txt.style.padding = '.2em .35em';
+					txt.style.opacity = '.9';
+					txt.style.fontWeight = 'bold';
+					txt.innerText = dif;
 					ele = document.createElement('td');
-					ele.innerText = dif;
+					ele.appendChild(txt);
+					ele.fontSize = '1.1rem';
 					ele.classList = ori[i].classList;
-					ori[i].classList.remove('right');
-					insertAfter(ele, ori[i]);
+					ele.classList.remove('right');
+					ori[i].parentNode.insertBefore(ele, ori[i]);
 				}
 			}
 		}
