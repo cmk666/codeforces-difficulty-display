@@ -13,7 +13,7 @@
 (() => {
 	var url = location.href;
 	var cid = url.substr(9 + url.indexOf('/contest/'));
-	if ( !/[1-9]\d+/.test(cid) ) return;
+	if ( !/^\d+$/.test(cid) ) return;
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', '/api/contest.standings?from=1&count=1&contestId=' + cid);
 	xhr.send();
